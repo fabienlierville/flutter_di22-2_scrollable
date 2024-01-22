@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable/pages/list_view_page.dart';
 import 'package:scrollable/pages/single_child_page.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SingleChildPage(),
+      home: const ListViewPage(),
     );
   }
 }
