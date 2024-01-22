@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:scrollable/models/activite.dart';
+import 'package:scrollable/pages/activite_detail_page.dart';
 
 class ListViewPage extends StatefulWidget {
   const ListViewPage({super.key});
@@ -49,11 +50,23 @@ class _ListViewPageState extends State<ListViewPage> {
       body: ListView.builder(
           itemCount: activites.length,
           itemBuilder: (context, index){
-            return Row(
-              children: [
-                Container(height: 100,child: Text("Activité : ${activites[index].nom}"),),
-                Container(height: 100,child: Icon(activites[index].icone),)
-              ],
+            Activite activite = activites[index];
+            return ListTile(
+              title: Text("Activité"),
+              subtitle: Text(activite.nom),
+              leading: Icon(activite.icone),
+              trailing: Icon(Icons.arrow_forward_ios),
+              onTap: (){
+                print("Je vais vers l'activité : ${activite.nom}");
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context){
+                      return ActiviteDetailPage(
+                          activite: activite
+                      );
+                    })
+                );
+              },
             );
           }
       ),
