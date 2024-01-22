@@ -72,24 +72,70 @@ class _ListViewPageState extends State<ListViewPage> {
       appBar: AppBar(
         title: Text("List View"),
       ),
-      body: ListView.builder(
-          itemCount: activites.length,
-          controller: scrollController,
-          itemBuilder: (context, index) {
-            Activite activite = activites[index];
-            return ListTile(
-              title: Text("Activité"),
-              subtitle: Text(activite.nom),
-              leading: Icon(activite.icone),
-              trailing: Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                print("Je vais vers l'activité : ${activite.nom}");
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ActiviteDetailPage(activite: activite);
-                }));
-              },
-            );
-          }),
+      body: Scrollbar(
+        child: ListView.separated(
+            itemCount: activites.length,
+            controller: scrollController,
+            separatorBuilder: (context, index){
+              if((index % 10)==0 && index != 0){
+                return Container(height: 150,color: Colors.red,);
+              }else{
+                return Divider(color: Colors.grey,);
+              }
+            },
+            itemBuilder: (context, index) {
+              Activite activite = activites[index];
+              return Dismissible(
+                key: Key(activite.nom),
+                background: Container(
+                  color: Colors.red,
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete, color: Colors.white,),
+                      Text("Supprimer")
+                    ],
+                  ),
+                ),
+                secondaryBackground: Container(
+                  color: Colors.green,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.archive, color: Colors.white,),
+                      Text("Archiver")
+                    ],
+                  ),
+                ),
+                onDismissed: (direction){
+                  if(direction == DismissDirection.endToStart){
+                    print("Archivage du mail");
+                    // Todo interroger l'API pour archiver ...
+                    setState(() {
+                      activites.removeAt(index);
+                    });
+                  }else{
+                    print("Suppression du mail");
+                    // Todo interroger l'API pour suppprimer ...
+                    setState(() {
+                      activites.removeAt(index);
+                    });
+                  }
+                },
+                child: ListTile(
+                  title: Text("Activité"),
+                  subtitle: Text(activite.nom),
+                  leading: Icon(activite.icone),
+                  trailing: Icon(Icons.arrow_forward_ios),
+                  onTap: () {
+                    print("Je vais vers l'activité : ${activite.nom}");
+                    Navigator.push(context, MaterialPageRoute(builder: (context) {
+                      return ActiviteDetailPage(activite: activite);
+                    }));
+                  },
+                ),
+              );
+            }),
+      ),
     );
   }
 }
