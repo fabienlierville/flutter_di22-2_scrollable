@@ -42,6 +42,19 @@ class _ListViewPageState extends State<ListViewPage> {
     Activite(nom: "Jeux vidéo", icone: Icons.gamepad),
     Activite(nom: "Bricolage", icone: Icons.build),
   ];
+  ScrollController scrollController = ScrollController();
+
+  void infinityScroll(){
+    print("Position = ${scrollController.position.pixels} | TAille Max ${scrollController.position.maxScrollExtent}");
+
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    scrollController.addListener(infinityScroll);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,6 +62,7 @@ class _ListViewPageState extends State<ListViewPage> {
       appBar: AppBar(title: Text("List View"),),
       body: ListView.builder(
           itemCount: activites.length,
+          controller: scrollController,
           itemBuilder: (context, index){
             Activite activite = activites[index];
             return ListTile(
