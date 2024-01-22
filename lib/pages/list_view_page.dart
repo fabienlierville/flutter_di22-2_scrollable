@@ -44,9 +44,19 @@ class _ListViewPageState extends State<ListViewPage> {
   ];
   ScrollController scrollController = ScrollController();
 
-  void infinityScroll(){
-    print("Position = ${scrollController.position.pixels} | TAille Max ${scrollController.position.maxScrollExtent}");
+  void infinityScroll() {
+    //print("Position = ${scrollController.position.pixels} | Taille Max ${scrollController.position.maxScrollExtent}");
 
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent * 0.90) {
+      print("J'arrive à 90% de ma liste actuelle");
+      List<Activite> shuffleActivite = List.from(activites);
+      setState(() {
+        shuffleActivite.forEach((element) {
+          activites.add(element);
+        });
+      });
+    }
   }
 
   @override
@@ -59,31 +69,27 @@ class _ListViewPageState extends State<ListViewPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("List View"),),
+      appBar: AppBar(
+        title: Text("List View"),
+      ),
       body: ListView.builder(
           itemCount: activites.length,
           controller: scrollController,
-          itemBuilder: (context, index){
+          itemBuilder: (context, index) {
             Activite activite = activites[index];
             return ListTile(
               title: Text("Activité"),
               subtitle: Text(activite.nom),
               leading: Icon(activite.icone),
               trailing: Icon(Icons.arrow_forward_ios),
-              onTap: (){
+              onTap: () {
                 print("Je vais vers l'activité : ${activite.nom}");
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context){
-                      return ActiviteDetailPage(
-                          activite: activite
-                      );
-                    })
-                );
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ActiviteDetailPage(activite: activite);
+                }));
               },
             );
-          }
-      ),
+          }),
     );
   }
 }
