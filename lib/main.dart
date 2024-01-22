@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable/pages/grid_view_page.dart';
 import 'package:scrollable/pages/list_view_page.dart';
 import 'package:scrollable/pages/single_child_page.dart';
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const ListViewPage(),
+      home: const GridViewPage(),
     );
   }
 }
