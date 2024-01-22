@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scrollable/pages/grid_view_page.dart';
+import 'package:scrollable/pages/home_page.dart';
 import 'package:scrollable/pages/list_view_page.dart';
 import 'package:scrollable/pages/single_child_page.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  /*
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.landscapeLeft
+  ]);
+
+   */
   runApp(const MyApp());
 }
 
@@ -19,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const GridViewPage(),
+      home: const HomePage(),
     );
   }
 }
